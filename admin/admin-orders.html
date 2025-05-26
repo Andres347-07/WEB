@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Pedidos</title>
+  <!-- Ajusta la ruta a main.css si tu estructura de carpetas difiere -->
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <!-- Contenedor principal para el layout de dos columnas -->
+  <div class="wrapper">
+    
+    <!-- Menú lateral -->
+    <aside>
+      <header>
+        <h1 class="logo">TopCaps</h1>
+      </header>
+      <nav>
+        <ul class="menu">
+          <li><a class="boton-menu" href="admin-dashboard.html">Dashboard</a></li>
+          <li><a class="boton-menu" href="admin-products.html">Productos</a></li>
+          <!-- Agrega "active" en Pedidos para indicar la sección actual -->
+          <li><a class="boton-menu active" href="admin-orders.html">Pedidos</a></li>
+        </ul>
+      </nav>
+      <footer>
+        <p class="texto-footer">© 2025 Diego Peñaranda</p>
+      </footer>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main>
+      <h2 class="titulo-principal">Historial de Pedidos</h2>
+      
+      <!-- Sección con la tabla de pedidos -->
+      <section class="tabla-pedidos">
+        <h3>Pedidos Realizados</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Productos</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="tablaPedidos">
+            <!-- Se llena con JS -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+  </div>
+
+  <!-- Ajusta la ruta a tu script de pedidos -->
+  <script src="../js/admin-orders.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Gestión de Productos</title>
+  <link rel="stylesheet" href="../css/main.css"> <!-- Ruta a tu main.css -->
+</head>
+<body>
+  <div class="wrapper">
+    <aside>
+      <header>
+        <h1 class="logo">TopCaps</h1>
+      </header>
+      <nav>
+        <ul class="menu">
+          <li><a class="boton-menu" href="admin-panel.html">Panel</a></li>
+          <li><a class="boton-menu active" href="admin-products.html">Productos</a></li>
+          <li><a class="boton-menu" href="admin-orders.html">Pedidos</a></li>
+        </ul>
+      </nav>
+      <footer>
+        <p class="texto-footer">© 2025 Diego Peñaranda</p>
+      </footer>
+    </aside>
+
+    <main>
+      <h2 class="titulo-principal">Gestión de Productos</h2>
+      
+      <!-- Botones para alternar secciones -->
+      <div class="acciones-gestion">
+        <button id="btnAgregarEditar">Agregar Producto</button>
+        <button id="btnVerLista" style="display: none;">Ver Lista de Productos</button>
+      </div>
+      
+      <!-- Sección de formulario: inicialmente oculta -->
+      <section id="seccionAgregarEditar" class="seccion-gestion" style="display: none;">
+        <h3>Agregar Producto</h3>
+        <!-- Formulario reorganizado en 2 columnas -->
+        <form id="formProducto">
+          <div class="form-group">
+            <label for="nombreProducto">Nombre del Producto:</label>
+            <input type="text" id="nombreProducto" name="nombreProducto" required>
+          </div>
+
+          <div class="form-group">
+            <label for="categoriaProducto">Categoría:</label>
+            <select id="categoriaProducto" name="categoriaProducto" required>
+              <option value="Gorras Urbanas">Gorras Urbanas</option>
+              <option value="Gorras Clasicas">Gorras Clásicas</option>
+              <option value="Accesorios">Accesorios</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="imagenProducto">Imagen:</label>
+            <input type="file" id="imagenProducto" name="imagenProducto" required>
+          </div>
+
+          <div class="form-group">
+            <label for="precioProducto">Precio:</label>
+            <input type="number" id="precioProducto" name="precioProducto" required>
+          </div>
+
+          <div class="form-group">
+            <label for="cantidadProducto">Cantidad Disponible:</label>
+            <input type="number" id="cantidadProducto" name="cantidadProducto" required>
+          </div>
+
+          <!-- Descripción ocupa ancho completo (2 columnas) -->
+          <div class="form-group wide">
+            <label for="descripcionProducto">Descripción:</label>
+            <textarea id="descripcionProducto" name="descripcionProducto" required></textarea>
+          </div>
+
+          <!-- Botón Guardar ocupa ancho completo (2 columnas) -->
+          <div class="form-group wide">
+            <button type="submit">Guardar Producto</button>
+          </div>
+        </form>
+      </section>
+      
+      <!-- Sección de lista de productos (visible por defecto) -->
+      <section id="seccionLista" class="tabla-productos">
+        <h3>Lista de Productos</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaProductos">
+            <!-- Se llenarán mediante JS -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <!-- Carga de Firebase y scripts de la aplicación -->
+  <script type="module" src="../js/firebase-init.js"></script>
+  <script type="module" src="../js/admin-products.js"></script>
+
+  <!-- Script para alternar secciones -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btnAgregarEditar = document.getElementById("btnAgregarEditar");
+      const btnVerLista = document.getElementById("btnVerLista");
+      const seccionAgregarEditar = document.getElementById("seccionAgregarEditar");
+      const seccionLista = document.getElementById("seccionLista");
+
+      btnAgregarEditar.addEventListener("click", () => {
+        seccionAgregarEditar.style.display = "block";
+        seccionLista.style.display = "none";
+        btnVerLista.style.display = "inline-block";
+        btnAgregarEditar.style.display = "none";
+      });
+
+      btnVerLista.addEventListener("click", () => {
+        seccionAgregarEditar.style.display = "none";
+        seccionLista.style.display = "block";
+        btnAgregarEditar.style.display = "inline-block";
+        btnVerLista.style.display = "none";
+      });
+    });
+  </script>
+</body>
+</html>
