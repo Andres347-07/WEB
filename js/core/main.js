@@ -1,7 +1,8 @@
 // js/main.js
 import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-import { db } from "./firebase-init.js";
-import Cart from "./cartSingleton.js"; // <-- Agregado para Singleton
+import { db } from "../core/firebase-init.js";          // <-- Ajuste de ruta
+import Cart from "../models/cartSingleton.js";           // <-- Ajuste de ruta
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const cart = new Cart();            // <-- Instancia Singleton

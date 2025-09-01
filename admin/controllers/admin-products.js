@@ -8,7 +8,7 @@ import {
   updateDoc,
   deleteDoc
 } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-import { db, storage } from "./firebase-init.js";
+import { db, storage } from "../../js/core/firebase-init.js"; // se ajusto la ruta
 import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-storage.js";
 
 document.addEventListener("DOMContentLoaded", () => {

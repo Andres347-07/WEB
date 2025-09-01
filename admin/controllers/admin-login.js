@@ -10,7 +10,8 @@ import {
   doc,
   setDoc
 } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-import { auth, db } from "./firebase-init.js";
+import { auth, db } from "../../js/core/firebase-init.js";  // se ajusto la ruta
+
 
 document.addEventListener("DOMContentLoaded", () => {
   // =======================
@@ -25,7 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Login exitoso
-        window.location.href = "admin-panel.html"; // Ajusta la ruta
+        window.location.href = "../views/admin-panel.html"; // se realizo un cambio aqui
+
       })
       .catch((error) => {
         alert(error.message);
@@ -116,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       alert("Registro con Google exitoso. Redirigiendo al panel...");
-      window.location.href = "admin-panel.html";
+      window.location.href = "../views/admin-panel.html"; // se realizo un cambio aqui
     } catch (error) {
       alert(error.message);
     }

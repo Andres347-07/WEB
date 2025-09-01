@@ -1,18 +1,17 @@
 // js/carrito.js
-import Cart from "./cartSingleton.js";                             // <-- Agregado Singleton
-import { NoDiscount, PercentageDiscount, FixedCoupon } from "./discountStrategies.js"; // <-- Agregado Strategy
+import Cart from "../models/cartSingleton.js"; 
+import { NoDiscount, PercentageDiscount, FixedCoupon } from "../models/discountStrategies.js";
 
-const cart = new Cart();           // <-- Obtiene la instancia
-let discountStrategy = new NoDiscount(); // <-- Estrategia por defecto
+const cart = new Cart();                     // <-- Singleton
+let discountStrategy = new NoDiscount();    // <-- Estrategia por defecto
 
 const contenedorCarritoVacio     = document.querySelector("#carrito-vacio");
 const contenedorCarritoProductos = document.querySelector("#carrito-productos");
 const contenedorCarritoAcciones  = document.querySelector("#carrito-acciones");
 const contenedorTotal            = document.querySelector("#total");
-const botonVaciar               = document.querySelector("#carrito-acciones-vaciar");
+const botonVaciar                = document.querySelector("#carrito-acciones-vaciar");
 
-// Modal y formulario siguen igual (no los listamos aquí para abreviar)
-
+// Listener de vaciar carrito
 botonVaciar.addEventListener("click", () => {
   Swal.fire({
     title: '¿Estás seguro?',
@@ -23,20 +22,22 @@ botonVaciar.addEventListener("click", () => {
     cancelButtonText: 'No'
   }).then(result => {
     if (result.isConfirmed) {
-      cart.clear();             // <-- Vacía usando el singleton
+      cart.clear();
       renderCarrito();
     }
-  });
+  }); 
 });
 
 function renderCarrito() {
   const productos = cart.getItems();
+
   if (productos.length === 0) {
     contenedorCarritoVacio.classList.remove("disabled");
     contenedorCarritoProductos.classList.add("disabled");
     contenedorCarritoAcciones.classList.add("disabled");
     return;
   }
+
   contenedorCarritoVacio.classList.add("disabled");
   contenedorCarritoProductos.classList.remove("disabled");
   contenedorCarritoAcciones.classList.remove("disabled");
@@ -56,31 +57,50 @@ function renderCarrito() {
     contenedorCarritoProductos.append(div);
   });
 
+  // Listener para eliminar productos
   document.querySelectorAll(".carrito-producto-eliminar").forEach(btn => {
     btn.addEventListener("click", e => {
-      cart.removeItem(e.currentTarget.id); // <-- Elimina usando singleton
+      cart.removeItem(e.currentTarget.id);
       Toastify({ text: "Producto eliminado", duration: 3000, close: true }).showToast();
       renderCarrito();
     });
   });
+
+  // Listener botón comprar
+  const botonComprar = document.querySelector("#carrito-acciones-comprar");
+  if (botonComprar) {
+    botonComprar.addEventListener("click", () => {
+      if(cart.getItems().length === 0) return;
+      Swal.fire({
+        icon: "success",
+        title: "Compra realizada",
+        html: `Gracias por tu compra de ${cart.getItems().reduce((acc,p)=>acc+p.cantidad,0)} productos!`
+      });
+      cart.clear();
+      renderCarrito();
+    });
+  }
 
   actualizarTotal();
 }
 
 function actualizarTotal() {
   const rawTotal   = cart.getRawTotal();
-  const finalTotal = discountStrategy.calculate(rawTotal); // <-- Se aplica la Strategy
+  const finalTotal = discountStrategy.calculate(rawTotal);
   contenedorTotal.innerText = `$${rawTotal.toLocaleString()} → $${finalTotal.toLocaleString()}`;
 }
-document.querySelector("#cupon").addEventListener("change", (e) => {
-    const val = e.target.value;
-    if (val === "none") 
-      discountStrategy = new NoDiscount();
-    else if (val.endsWith("%")) 
-      discountStrategy = new PercentageDiscount(parseFloat(val));
-    else 
-      discountStrategy = new FixedCoupon(parseFloat(val));
-    renderCarrito();
-  });
 
+// Listener para cupones
+document.querySelector("#cupon").addEventListener("change", (e) => {
+  const val = e.target.value;
+  if (val === "none") 
+    discountStrategy = new NoDiscount();
+  else if (val.endsWith("%")) 
+    discountStrategy = new PercentageDiscount(parseFloat(val));
+  else 
+    discountStrategy = new FixedCoupon(parseFloat(val));
+  renderCarrito();
+});
+
+// Render inicial
 renderCarrito();

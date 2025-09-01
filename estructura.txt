@@ -1,0 +1,32 @@
+Listado de rutas de carpetas para el volumen OS
+El número de serie del volumen es 88F1-036F
+C:.
+¦   .firebaserc
+¦   .gitignore
+¦   404.html
+¦   carrito.html
+¦   estructura.txt
+¦   firebase.json
+¦   index.html
+¦   
++---admin
+¦       admin-login.html
+¦       admin-orders.html
+¦       admin-panel.html
+¦       admin-products.html
+¦       admin-stock.html
+¦       
++---css
+¦       main.css
+¦       
++---js
+        admin-login.js
+        admin-panel.js
+        admin-products.js
+        carrito.js
+        cartSingleton.js
+        discountStrategies.js
+        firebase-init.js
+        main.js
+        menu.js
+        
