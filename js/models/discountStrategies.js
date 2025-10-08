@@ -1,11 +1,11 @@
-// js/discountStrategies.js
-export class NoDiscount {
+// js/models/discountStrategies.js - VERIFICA que tenga module.exports
+class NoDiscount {
     calculate(amount) {
       return amount;
     }
   }
   
-  export class PercentageDiscount {
+  class PercentageDiscount {
     constructor(percent) {
       this.percent = percent;
     }
@@ -14,7 +14,7 @@ export class NoDiscount {
     }
   }
   
-  export class FixedCoupon {
+  class FixedCoupon {
     constructor(amountOff) {
       this.amountOff = amountOff;
     }
@@ -22,3 +22,6 @@ export class NoDiscount {
       return Math.max(0, amount - this.amountOff);
     }
   }
+
+// ✅ ESTA LÍNEA DEBE ESTAR AL FINAL
+module.exports = { NoDiscount, PercentageDiscount, FixedCoupon };

@@ -1,7 +1,11 @@
-// js/cartSingleton.js
-export default class Cart {
+// js/models/cartSingleton.js - VERIFICA que tenga module.exports
+class Cart {
     constructor() {
-      if (Cart._instance) return Cart._instance;
+      if (Cart._instance) {
+        // ✅ CORRECCIÓN IMPORTANTE: Resetear items al obtener instancia existente
+        Cart._instance.items = JSON.parse(localStorage.getItem("productos-en-carrito")) || [];
+        return Cart._instance;
+      }
       this.items = JSON.parse(localStorage.getItem("productos-en-carrito")) || [];
       Cart._instance = this;
     }
@@ -38,3 +42,6 @@ export default class Cart {
       localStorage.setItem("productos-en-carrito", JSON.stringify(this.items));
     }
   }
+
+// ✅ ESTA LÍNEA DEBE ESTAR AL FINAL
+module.exports = Cart;
