@@ -1,0 +1,115 @@
+name: 🚀 Deploy TopCaps to Firebase
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+env:
+  FIREBASE_PROJECT_ID: topcaps-5cbfe
+
+jobs:
+  # JOB 1: PRUEBAS Y VERIFICACIÓN
+  test_and_verify:
+    name: 🧪 Run Tests & Verify
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: 📦 Install dependencies
+      run: npm install
+    
+    - name: 🧪 Run Jest tests
+      run: npm test
+      env:
+        NODE_ENV: test
+    
+    - name: 📊 Test coverage
+      run: npm run test:coverage
+    
+    - name: 🔍 Verify project structure
+      run: |
+        echo "🔎 Verificando estructura del proyecto..."
+        ls -la
+        echo "--- Archivos HTML ---"
+        find . -name "*.html" | head -10
+        echo "--- Archivos JS ---"
+        find . -name "*.js" | head -10
+        echo "--- Verificando archivos críticos ---"
+        [ -f "index.html" ] && echo "✅ index.html encontrado" || echo "❌ index.html NO encontrado"
+        [ -f "carrito.html" ] && echo "✅ carrito.html encontrado" || echo "❌ carrito.html NO encontrado"
+        [ -f "firebase.json" ] && echo "✅ firebase.json encontrado" || echo "❌ firebase.json NO encontrado"
+        [ -f ".firebaserc" ] && echo "✅ .firebaserc encontrado" || echo "❌ .firebaserc NO encontrado"
+    
+    - name: 🔧 Check JavaScript syntax
+      run: |
+        echo "🔧 Verificando sintaxis JavaScript..."
+        for js_file in $(find . -name "*.js" -not -path "./node_modules/*"); do
+          if node -c "$js_file" 2>/dev/null; then
+            echo "✅ $js_file - Sintaxis correcta"
+          else
+            echo "❌ $js_file - Error de sintaxis"
+            exit 1
+          fi
+        done
+    
+    - name: 📝 Verify Firebase configuration
+      run: |
+        echo "📝 Verificando configuración de Firebase..."
+        cat firebase.json
+        cat .firebaserc
+        
+        # Verificar que el project ID coincida
+        CONFIG_PROJECT=$(cat .firebaserc | grep -o '"default": "[^"]*' | cut -d'"' -f4)
+        echo "Project ID en .firebaserc: $CONFIG_PROJECT"
+        echo "Project ID en workflow: $FIREBASE_PROJECT_ID"
+        
+        if [ "$CONFIG_PROJECT" != "$FIREBASE_PROJECT_ID" ]; then
+          echo "❌ Los project IDs no coinciden"
+          exit 1
+        else
+          echo "✅ Project IDs coinciden correctamente"
+        fi
+
+  # JOB 2: DESPLIEGUE A FIREBASE
+  deploy:
+    name: 🚀 Deploy to Firebase
+    runs-on: ubuntu-latest
+    needs: test_and_verify
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: 📦 Install Firebase CLI
+      run: npm install -g firebase-tools
+    
+    - name: 🔐 Deploy to Firebase Hosting
+      run: |
+        echo "🚀 Desplegando a Firebase Hosting..."
+        firebase deploy --only hosting --project $FIREBASE_PROJECT_ID --token "$FIREBASE_TOKEN"
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    
+    - name: 📢 Notify deployment
+      run: |
+        echo "🎉 ¡Despliegue completado exitosamente!"
+        echo "🌐 Tu sitio está disponible en: https://topcaps-5cbfe.web.app"
+        echo "📊 Build: $GITHUB_SHA"
+        echo "👤 Desplegado por: $GITHUB_ACTOR"
