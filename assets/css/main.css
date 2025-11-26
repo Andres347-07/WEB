@@ -146,7 +146,7 @@ main {
 /* -------------------- VISTA DE PRODUCTOS (INDEX.HTML) -------------------- */
 
 .titulo-principal {
-    color: var(--clr-main);
+    color: var(--clr-white);
     margin-bottom: 2rem;
 }
 
@@ -910,9 +910,10 @@ main {
 /* -------------------- VISTA DE PRODUCTOS (INDEX.HTML) -------------------- */
 
 .titulo-principal {
-    color: var(--clr-main);
+    color: var(--clr-white);
     margin-bottom: 2rem;
 }
+
 
 .contenedor-productos {
     display: grid;
@@ -1526,4 +1527,8 @@ body.admin-login .login-links a {
   text-decoration: underline;
   cursor: pointer;
   margin: 0 0.5rem;
+}
+
+.logo {
+    color: var(--clr-white) !important;
 }
