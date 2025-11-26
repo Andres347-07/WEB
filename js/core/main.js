@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       producto.id = docSnap.id;
       productos.push(producto);
     });
+
     cargarProductos(productos);
   }, (error) => {
     console.error("Error al obtener productos: ", error);
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const div = document.createElement("div");
       div.classList.add("producto");
       div.innerHTML = `
-        <img class="producto-imagen" src="${producto.imagen}" alt="${producto.nombre}">
+        <img class="producto-imagen" src="${producto.imagen || './assets/img/default-product.png'}" alt="${producto.nombre}">
         <div class="producto-detalles">
           <h3 class="producto-titulo">${producto.nombre}</h3>
           <p class="producto-precio">$${producto.precio}</p>
