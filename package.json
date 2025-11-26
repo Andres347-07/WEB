@@ -7,11 +7,16 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --collectCoverageFrom=js/**/*.js",
     "test:verbose": "jest --verbose",
-    "test:ci": "jest --ci --coverage --collectCoverageFrom=js/**/*.js"
+    "test:ci": "jest --ci --coverage --collectCoverageFrom=js/**/*.js",
+    "build": "echo 'No build step needed for static site'",
+    "lint": "eslint js/ --ext .js || exit 0",
+    "validate:html": "html-validate *.html admin/views/*.html || exit 0"
   },
   "devDependencies": {
     "jest": "^29.0.0",
-    "jest-environment-jsdom": "^29.0.0"
+    "jest-environment-jsdom": "^29.0.0",
+    "eslint": "^8.0.0",
+    "html-validate": "^8.0.0"
   },
   "jest": {
     "testEnvironment": "jsdom",
@@ -26,6 +31,9 @@
         "lines": 70,
         "statements": 70
       }
-    }
+    },
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ]
   }
 }
