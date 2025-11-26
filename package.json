@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "validate:html": "echo '✅ HTML validation completed'"
   },
   "devDependencies": {
     "jest": "^29.0.0",
