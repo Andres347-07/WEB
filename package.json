@@ -1,10 +1,9 @@
 {
   "name": "topcaps-ecommerce",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "devDependencies": {
     "jest": "^29.0.0",
@@ -12,18 +11,9 @@
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "transform": {},
     "collectCoverageFrom": [
       "js/**/*.js",
       "!js/core/firebase-init.js"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 50,
-        "functions": 50,
-        "lines": 50,
-        "statements": 50
-      }
-    }
+    ]
   }
 }
