@@ -38,7 +38,7 @@ jobs:
     
     - name: Verify project structure
       run: |
-        echo "🔍 Verificando estructura del proyecto..."
+        echo "Verificando estructura del proyecto..."
         ls -la
         echo "--- Archivos HTML ---"
         find . -name "*.html" | head -10
@@ -48,7 +48,7 @@ jobs:
         find . -name "*.js" | head -10
         
         # Verificación de archivos críticos
-        echo "📋 Verificando archivos críticos..."
+        echo "Verificando archivos críticos..."
         [ -f "index.html" ] && echo "✅ index.html encontrado" || (echo "❌ index.html NO encontrado" && exit 1)
         [ -f "carrito.html" ] && echo "✅ carrito.html encontrado" || (echo "❌ carrito.html NO encontrado" && exit 1)
         [ -f "firebase.json" ] && echo "✅ firebase.json encontrado" || (echo "❌ firebase.json NO encontrado" && exit 1)
@@ -124,11 +124,11 @@ jobs:
     
     - name: Notify deployment success
       run: |
-        echo "🎉 ¡Despliegue completado exitosamente!"
+        echo "   ¡Despliegue completado exitosamente!"
         echo "🌐 Tu sitio está disponible en: https://topcaps-5cbfe.web.app"
-        echo "📝 Build: $GITHUB_SHA"
-        echo "👤 Desplegado por: $GITHUB_ACTOR"
-        echo "⏰ Fecha: $(date)"
+        echo "    Build: $GITHUB_SHA"
+        echo "    Desplegado por: $GITHUB_ACTOR"
+        echo "    Fecha: $(date)"
         
         # Crear badge de estado
         echo "✅ CI/CD Status: PASSING" >> $GITHUB_STEP_SUMMARY
