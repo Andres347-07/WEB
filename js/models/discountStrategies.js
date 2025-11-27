@@ -1,28 +1,27 @@
-// js/models/discountStrategies.js
-
-// Sin descuento
-export class NoDiscount {
+// js/models/discountStrategies.js - VERIFICA que tenga module.exports
+class NoDiscount {
     calculate(amount) {
-        return amount;
+      return amount;
     }
-}
-
-// Descuento porcentual
-export class PercentageDiscount {
+  }
+  
+  class PercentageDiscount {
     constructor(percent) {
-        this.percent = percent;
+      this.percent = percent;
     }
     calculate(amount) {
-        return amount * (1 - this.percent / 100);
+      return amount * (1 - this.percent / 100);
     }
-}
-
-// Cupón fijo (resta un valor específico)
-export class FixedCoupon {
+  }
+  
+  class FixedCoupon {
     constructor(amountOff) {
-        this.amountOff = amountOff;
+      this.amountOff = amountOff;
     }
     calculate(amount) {
-        return Math.max(0, amount - this.amountOff);
+      return Math.max(0, amount - this.amountOff);
     }
-}
+  }
+
+// ✅ ESTA LÍNEA DEBE ESTAR AL FINAL
+module.exports = { NoDiscount, PercentageDiscount, FixedCoupon };
