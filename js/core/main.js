@@ -1,7 +1,7 @@
 // assets/js/main.js
 
 import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-import { db } from "../core/firebase-init.js";
+import { db } from  "../core/firebase-init.js";
 import Cart from "../models/cartSingleton.js";
 
 document.addEventListener("DOMContentLoaded", () => {
